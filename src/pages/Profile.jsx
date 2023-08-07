@@ -2,10 +2,10 @@
 import { Link } from "react-router-dom";
 
 const urlB64ToUint8Array = (base64String) => {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
+    .replace(/\-/g, "+")
+    .replace(/_/g, "/");
 
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
@@ -14,20 +14,49 @@ const urlB64ToUint8Array = (base64String) => {
     outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
-}
+};
 
-const subscribe = async() => {
-  const key = "BGnvVKjFKDFT_aNqjTKcwG8PyTAcompbvNocNLsbU0VXUMHEy5tg7xdxxe6QRcdVcsxc3wnsrmEcycbaj6rsIMY";
+const subscribe = async () => {
+  const key =
+    "BGnvVKjFKDFT_aNqjTKcwG8PyTAcompbvNocNLsbU0VXUMHEy5tg7xdxxe6QRcdVcsxc3wnsrmEcycbaj6rsIMY";
   try {
     await global.registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlB64ToUint8Array(key)
+      applicationServerKey: urlB64ToUint8Array(key),
     });
     console.log("Subscribe!");
   } catch (error) {
     console.error("Cannot subscribe.");
   }
-}
+};
+
+const notifyMe = () => {
+  if (!window.Notification) {
+    console.log("Browser does not support notifications.");
+  } else {
+    if (Notification.permission === "granted") {
+      new Notification("LuxSpace", {
+        body: "How are you doing?",
+        icon: '/icon-120.png',
+      });
+    } else {
+      Notification.requestPermission()
+        .then(function (p) {
+          if (p === "granted") {
+            new Notification("LuxSpace", {
+              body: "How are you doing?",
+              icon: '/icon-120.png',
+            });
+          } else {
+            console.log("User blocked notifications.");
+          }
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    }
+  }
+};
 
 const Profile = () => {
   return (
@@ -179,7 +208,10 @@ const Profile = () => {
             </li>
             <li className="pb-3 mb-2 flex items-center justify-between w-full border-b border-gray-100">
               <span>Test Notification</span>
-              <button className="hover:underline appearance-none">
+              <button
+                className="hover:underline appearance-none"
+                onClick={notifyMe}
+              >
                 Push Now
               </button>
             </li>
