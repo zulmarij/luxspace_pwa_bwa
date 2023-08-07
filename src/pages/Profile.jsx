@@ -187,13 +187,13 @@ const Profile = () => {
             <div className="w-full md:w-4/12 text-center">
               <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 mt-20">
                 <img
-                  src="./images/content/my-profile.png"
+                  src="./images/content/user-profile.png"
                   alt="my-profile"
                   className="object-cover w-full h-full"
                 />
               </div>
-              <h2 className="text-xl font-semibold mb-1">Masayoshi Angga</h2>
-              <p className="text-lg mb-12">Jr. Website Developer</p>
+              <h2 className="text-xl font-semibold mb-1">Muhammad Zul Marij Rizqi Fathullah</h2>
+              <p className="text-lg mb-12">Website Developer</p>
             </div>
           </div>
           <ul className="max-w-full md:max-w-lg mx-auto">
